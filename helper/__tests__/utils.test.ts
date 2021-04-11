@@ -1,14 +1,26 @@
 import * as utils from "../utils";
 import assert from "assert";
 
+let sinon = require("sinon");
+
 interface Interest {
   monthlyDeposit: number;
   principleDeposit: number;
-  monthlyInterest: number;
+  yearlyInterest: number;
   timeInMonths: number;
   timeInYears: number;
 }
 describe("utils", () => {
+  let stub: any;
+  let date: Date;
+  beforeEach(() => {
+    date = new Date(2021, 1, 1, 1, 1, 1, 0);
+    stub = sinon.stub(Date, "now");
+    stub.returns(date);
+  });
+
+  afterEach(() => stub.restore());
+
   describe("toYearsFromNow", () => {
     it("When args Then should produce an array of years between now until the number of years provided", () => {
       assert.deepStrictEqual(utils.toYearsFromNow(5), [
@@ -20,39 +32,40 @@ describe("utils", () => {
       ]);
     });
   });
+
   describe("compoundInterest", () => {
     let params: Interest;
     beforeEach(() => {
       params = {
         monthlyDeposit: 250,
         principleDeposit: 1000,
-        monthlyInterest: 1,
+        yearlyInterest: 1,
         timeInMonths: 5,
         timeInYears: 5,
       };
     });
 
     it("Given all parameters are valid Then should calculate monthly compound interest", () => {
-      const { monthlyDeposit, monthlyInterest, timeInMonths } = params;
+      const { monthlyDeposit, yearlyInterest, timeInMonths } = params;
       assert.strictEqual(
         utils.monthlyCompoundInterest(
           monthlyDeposit,
-          monthlyInterest,
+          yearlyInterest,
           timeInMonths
         ),
-        1275
+        1252
       );
     });
 
     it("Given all parameters are valid Then should calculate principle compound interest", () => {
-      const { principleDeposit, monthlyInterest, timeInMonths } = params;
+      const { principleDeposit, yearlyInterest, timeInMonths } = params;
       assert.strictEqual(
         utils.principleCompoundInterest(
           principleDeposit,
-          monthlyInterest,
+          yearlyInterest,
           timeInMonths
         ),
-        1051
+        1004
       );
     });
 
@@ -60,17 +73,17 @@ describe("utils", () => {
       const {
         principleDeposit,
         monthlyDeposit,
-        monthlyInterest,
+        yearlyInterest,
         timeInMonths,
       } = params;
       assert.strictEqual(
-        utils.totalSavingsOverTime(
+        utils.totalYearlySavings(
           principleDeposit,
           monthlyDeposit,
-          monthlyInterest,
+          yearlyInterest,
           timeInMonths
         ),
-        2326
+        2256
       );
     });
 
@@ -78,17 +91,62 @@ describe("utils", () => {
       const {
         principleDeposit,
         monthlyDeposit,
-        monthlyInterest,
+        yearlyInterest,
         timeInYears,
       } = params;
       assert.deepStrictEqual(
         utils.yearlySavingsOverTime(
           principleDeposit,
           monthlyDeposit,
-          monthlyInterest,
+          yearlyInterest,
           timeInYears
         ),
-        [4988, 8560, 12586, 17123, 22234]
+        [6566, 9647, 12757, 15899, 19073]
+      );
+    });
+
+    it("Given all current date is near end of year Then this should be factored in array of yearly savings", () => {
+      date = new Date(2021, 11, 24, 10, 33, 30, 0);
+      stub.returns(date);
+
+      const {
+        principleDeposit,
+        monthlyDeposit,
+        yearlyInterest,
+        timeInYears,
+      } = params;
+      assert.deepStrictEqual(
+        utils.yearlySavingsOverTime(
+          principleDeposit,
+          monthlyDeposit,
+          yearlyInterest,
+          timeInYears
+        ),
+        [4024, 7078, 10162, 13279, 16426]
+      );
+    });
+
+    it("Given all parameters are valid Then should produce array of objects with compounded value for corresponding years", () => {
+      const {
+        principleDeposit,
+        monthlyDeposit,
+        yearlyInterest,
+        timeInYears,
+      } = params;
+      assert.deepStrictEqual(
+        utils.getYearlyCompoundSavingsData(
+          principleDeposit,
+          monthlyDeposit,
+          yearlyInterest,
+          timeInYears
+        ),
+        [
+          { year: "2022", value: 6566 },
+          { year: "2023", value: 9647 },
+          { year: "2024", value: 12757 },
+          { year: "2025", value: 15899 },
+          { year: "2026", value: 19073 },
+        ]
       );
     });
   });

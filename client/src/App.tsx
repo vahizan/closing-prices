@@ -5,13 +5,13 @@ import { Container } from '@chakra-ui/react'
 import DefaultLayout from './components/layouts/Default'
 import LineChart from './components/LineChart'
 import theme from './theme'
-import TextField from './components/TextField'
+import NumberField from './components/NumberField'
 import RangeSlider from './components/RangeSlider'
 
 const defaultTheme = extendTheme(theme)
 
 // Note: This is just for example purposes
-// should be replaced with real data from the server
+// should be replaced with real data from the helper
 const tempData = {
     xAxis: [
         0,
@@ -134,15 +134,16 @@ function App() {
                         xLabel="Years"
                         yLabel="Amount"
                     />
-                    <TextField
-                        setText={() => {}}
-                        type={'text'}
-                        timeoutValue={200}
-                        placeholder={'Initial Deposit'}
-                    />
-                    <RangeSlider min={0} max={150} setValue={() => {}} defaultValue={0} />
-                    <RangeSlider min={0} max={100} setValue={() => {}} defaultValue={0} />
                 </Container>
+                <NumberField
+                    min={0.01}
+                    step={0.1}
+                    id="rate"
+                    max={5.0}
+                    aria-label="Interest rate"
+                    data-testid="calc-rate-input"
+                    className="css-1kscnzb-StyledInputBasic evdk3cn0"
+                />
             </DefaultLayout>
         </ChakraProvider>
     )

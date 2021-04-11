@@ -1,12 +1,21 @@
 import React, { ChangeEvent } from 'react'
 
-type Props = {
-    setText: Function
+interface NumberFieldProps {
+    setNumber: Function
     placeholder?: string
     timeoutValue?: number
-    type: string
+    min?: number
+    max?: number
+    step?: number
 }
-const TextField = ({ setText, type, placeholder, timeoutValue = 0 }: Props) => {
+const NumberField = ({
+    setNumber,
+    placeholder,
+    step = 1,
+    min = 0,
+    max = 1000,
+    timeoutValue = 0,
+}: NumberFieldProps) => {
     const onChange = (setterFunc: Function, timeout: number) => (
         event: ChangeEvent<HTMLInputElement>
     ) => {
@@ -20,14 +29,17 @@ const TextField = ({ setText, type, placeholder, timeoutValue = 0 }: Props) => {
     return (
         <div id="TextField">
             <input
-                data-testid="text-field"
-                name="TextInput"
-                type={type}
+                data-testid="number-field"
+                name="NumberInput"
+                type="number"
+                step={`${step}`}
+                min={min}
+                max={max}
                 placeholder={placeholder}
-                onChange={onChange(setText, timeoutValue)}
+                onChange={onChange(setNumber, timeoutValue)}
             />
         </div>
     )
 }
 
-export default TextField
+export default NumberField
