@@ -3,11 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "4.17.1"
   },
   "scripts": {
+    "start_dev": "concurrently \"npm run server_dev\" \"npm run client\"",
+    "server_dev": "NODE_ENV=development ts-node server.ts ",
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "ts-node server.ts",
+    "server": "NODE_ENV=production ts-node server.ts ",
     "types": "tsc",
     "client": "node scripts/start-client.js",
     "install": "cd client && yarn install && cd .."

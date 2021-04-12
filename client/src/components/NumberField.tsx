@@ -13,10 +13,10 @@ const NumberField = ({
     placeholder,
     step = 1,
     min = 0,
-    max = 1000,
+    max = Number.MAX_SAFE_INTEGER,
     timeoutValue = 0,
 }: NumberFieldProps) => {
-    const onChange = (setterFunc: Function, timeout: number) => (
+    const onInputChange = (setterFunc: Function, timeout: number) => (
         event: ChangeEvent<HTMLInputElement>
     ) => {
         if (timeout === 0) {
@@ -27,7 +27,7 @@ const NumberField = ({
     }
 
     return (
-        <div id="TextField">
+        <div id="NumberField">
             <input
                 data-testid="number-field"
                 name="NumberInput"
@@ -36,7 +36,7 @@ const NumberField = ({
                 min={min}
                 max={max}
                 placeholder={placeholder}
-                onChange={onChange(setNumber, timeoutValue)}
+                onChange={onInputChange(setNumber, timeoutValue)}
             />
         </div>
     )

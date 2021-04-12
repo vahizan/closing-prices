@@ -2,8 +2,9 @@ import express from "express";
 import { CompoundInterestRequest } from "./types/CompoundInterestTypes";
 import {
   getYearlyCompoundSavingsData,
-  totalYearlySavings,
-} from "../helper/utils";
+  getMonthlyCompoundSavingsData,
+  totalSavingsOverTime,
+} from "./helper/utils";
 
 const url = require("url");
 const CompoundInterestRoutes = express.Router();
@@ -28,6 +29,30 @@ const clientErrorMessage = {
   ],
 };
 
+CompoundInterestRoutes.get("/interest/months", (req, res) => {
+  const parsedUrl = url.parse(req.url, true);
+  if (!parsedUrl || !instanceOfCompoundInterestRequest(parsedUrl.query)) {
+    res.status(422).send(clientErrorMessage);
+    return;
+  }
+  const {
+    initialDeposit,
+    monthlyDeposit,
+    yearlyInterest,
+    numberOfYears,
+  } = parsedUrl.query;
+  res
+    .status(200)
+    .json(
+      getMonthlyCompoundSavingsData(
+        initialDeposit,
+        monthlyDeposit,
+        yearlyInterest,
+        numberOfYears
+      )
+    );
+});
+
 CompoundInterestRoutes.get("/interest/years", (req, res) => {
   const parsedUrl = url.parse(req.url, true);
   if (!parsedUrl || !instanceOfCompoundInterestRequest(parsedUrl.query)) {
@@ -40,14 +65,16 @@ CompoundInterestRoutes.get("/interest/years", (req, res) => {
     yearlyInterest,
     numberOfYears,
   } = parsedUrl.query;
-  res.status(200).json({
-    data: getYearlyCompoundSavingsData(
-      initialDeposit,
-      monthlyDeposit,
-      yearlyInterest,
-      numberOfYears
-    ),
-  });
+  res
+    .status(200)
+    .json(
+      getYearlyCompoundSavingsData(
+        initialDeposit,
+        monthlyDeposit,
+        yearlyInterest,
+        numberOfYears
+      )
+    );
 });
 
 CompoundInterestRoutes.get("/interest/total", (req, res) => {
@@ -63,7 +90,7 @@ CompoundInterestRoutes.get("/interest/total", (req, res) => {
     numberOfYears,
   } = parsedUrl.query;
   res.status(200).json({
-    data: totalYearlySavings(
+    total: totalSavingsOverTime(
       initialDeposit,
       monthlyDeposit,
       yearlyInterest,

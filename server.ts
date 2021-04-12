@@ -1,11 +1,15 @@
 import express from "express";
 import CompoundInterestRoutes from "./routes/CompoundInterest";
 
+const cors = require("cors");
+
 const app = express();
 
 app.set("port", process.env.PORT || 3001);
 
-//app.use(cors({origin: 'https://localhost:3001'}))
+if (process.env.NODE_ENV === "development") {
+  app.use(cors({ origin: "http://localhost:3000" }));
+}
 // Express only serves static assets in production
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

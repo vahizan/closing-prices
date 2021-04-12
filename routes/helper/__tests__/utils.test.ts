@@ -1,5 +1,9 @@
 import * as utils from "../utils";
 import assert from "assert";
+import {
+  monthlyCompoundTestData,
+  yearlyCompoundTestData,
+} from "./utilsTestData";
 
 let sinon = require("sinon");
 
@@ -77,7 +81,7 @@ describe("utils", () => {
         timeInMonths,
       } = params;
       assert.strictEqual(
-        utils.totalYearlySavings(
+        utils.totalSavingsOverTime(
           principleDeposit,
           monthlyDeposit,
           yearlyInterest,
@@ -101,7 +105,7 @@ describe("utils", () => {
           yearlyInterest,
           timeInYears
         ),
-        [6566, 9647, 12757, 15899, 19073]
+        [4024, 7078, 10162, 13279, 16426]
       );
     });
 
@@ -140,13 +144,25 @@ describe("utils", () => {
           yearlyInterest,
           timeInYears
         ),
-        [
-          { year: "2022", value: 6566 },
-          { year: "2023", value: 9647 },
-          { year: "2024", value: 12757 },
-          { year: "2025", value: 15899 },
-          { year: "2026", value: 19073 },
-        ]
+        yearlyCompoundTestData
+      );
+    });
+
+    it("Given all parameters are valid Then should produce array of objects with monthly compounded values", () => {
+      const {
+        principleDeposit,
+        monthlyDeposit,
+        yearlyInterest,
+        timeInYears,
+      } = params;
+      assert.deepStrictEqual(
+        utils.getMonthlyCompoundSavingsData(
+          principleDeposit,
+          monthlyDeposit,
+          yearlyInterest,
+          timeInYears
+        ),
+        monthlyCompoundTestData
       );
     });
   });

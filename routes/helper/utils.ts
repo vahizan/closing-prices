@@ -10,14 +10,7 @@ const monthlyInterestRate = (interestRate: number) => interestRate / 12;
 const percentageToDecimal = (percentValue: number): number =>
   percentValue / 100;
 
-const DECEMBER = 11;
-const toMonths = (numberOfYears: number) => {
-  let now = new Date(Date.now());
-  return (
-    (now.getFullYear() + numberOfYears - now.getFullYear()) * 12 +
-    (DECEMBER - now.getMonth())
-  );
-};
+const toMonths = (numberOfYears: number) => numberOfYears * 12;
 
 export const monthlyCompoundInterest = (
   monthlyDeposit: number,
@@ -45,7 +38,7 @@ export const principleCompoundInterest = (
   return Math.round(initialDeposit * interestOverMonths);
 };
 
-export const totalYearlySavings = (
+export const totalSavingsOverTime = (
   initialDeposit: number,
   monthlyDeposit: number,
   yearlyInterest: number,
@@ -83,6 +76,47 @@ export const toYearsFromNow = (years: number): Array<string> => {
   });
 };
 
+export const monthlySavingsOverTime = (
+  initialDeposit: number,
+  monthlyDeposit: number,
+  yearlyInterest: number,
+  timeInYears: number
+): Array<number> => {
+  const arr = toRange(timeInYears * 12);
+  return arr.map((number) =>
+    totalSavingsOverTime(initialDeposit, monthlyDeposit, yearlyInterest, number)
+  );
+};
+
+const JANUARY = 1;
+const DECEMBER = 12;
+export const getMonthlyCompoundSavingsData = (
+  initialDeposit: number,
+  monthlyDeposit: number,
+  yearlyInterest: number,
+  timeInYears: number
+) => {
+  const years = toYearsFromNow(timeInYears);
+  const monthlyCompoundedValues = monthlySavingsOverTime(
+    initialDeposit,
+    monthlyDeposit,
+    yearlyInterest,
+    timeInYears
+  );
+
+  let yearCount = 0;
+  return monthlyCompoundedValues.map((value, index) => {
+    let month = index + 1;
+    let isNewYear = month % DECEMBER === JANUARY && month > DECEMBER;
+    yearCount = isNewYear ? yearCount + 1 : yearCount;
+    return {
+      year: years[yearCount],
+      month: month % DECEMBER === 0 ? DECEMBER : month % DECEMBER,
+      value,
+    };
+  });
+};
+
 export const yearlySavingsOverTime = (
   initialDeposit: number,
   monthlyDeposit: number,
@@ -91,7 +125,7 @@ export const yearlySavingsOverTime = (
 ): Array<number> => {
   const arr = toRange(timeInYears);
   return arr.map((number) =>
-    totalYearlySavings(
+    totalSavingsOverTime(
       initialDeposit,
       monthlyDeposit,
       yearlyInterest,
