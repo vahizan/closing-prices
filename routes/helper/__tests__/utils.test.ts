@@ -80,14 +80,33 @@ describe("utils", () => {
         yearlyInterest,
         timeInMonths,
       } = params;
-      assert.strictEqual(
+      assert.deepStrictEqual(
         utils.totalSavingsOverTime(
           principleDeposit,
           monthlyDeposit,
           yearlyInterest,
           timeInMonths
         ),
-        2256
+        { interest: 6, deposit: 2250, total: 2256 }
+      );
+    });
+
+    it("Given all parameters are valid Then should calculate total savings over next 50 years", () => {
+      params.timeInMonths = 600;
+      const {
+        principleDeposit,
+        monthlyDeposit,
+        yearlyInterest,
+        timeInMonths,
+      } = params;
+      assert.deepStrictEqual(
+        utils.totalSavingsOverTime(
+          principleDeposit,
+          monthlyDeposit,
+          yearlyInterest,
+          timeInMonths
+        ),
+        { interest: 45161, deposit: 151000, total: 196161 }
       );
     });
 

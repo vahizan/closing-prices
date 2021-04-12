@@ -173,7 +173,9 @@ describe("Compound Interest Routes", () => {
         })
         .then((res: any) => {
           const expectedData = {
-            total: 2256,
+            total: 16426,
+            deposit: 16000,
+            interest: 426,
           };
           assert.deepStrictEqual(res.body, expectedData);
           done();

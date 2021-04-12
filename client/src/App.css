@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+#NumberFieldContainer{
+  flex-direction: column;
+  padding: 10px;
+  margin: 10px;
+  height: 500px;
+}
+
+.NumberInput{
+  margin: 10px;
+
+}

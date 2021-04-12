@@ -89,14 +89,13 @@ CompoundInterestRoutes.get("/interest/total", (req, res) => {
     yearlyInterest,
     numberOfYears,
   } = parsedUrl.query;
-  res.status(200).json({
-    total: totalSavingsOverTime(
-      initialDeposit,
-      monthlyDeposit,
-      yearlyInterest,
-      numberOfYears
-    ),
-  });
+  const total = totalSavingsOverTime(
+    Number(initialDeposit),
+    monthlyDeposit,
+    yearlyInterest,
+    numberOfYears * 12
+  );
+  res.status(200).json(total);
 });
 
 export default CompoundInterestRoutes;

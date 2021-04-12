@@ -1,3 +1,5 @@
+import { Savings } from "../types/CompoundInterestTypes";
+
 const compoundedInterest = (
   interestRate: number,
   timeInMonths: number
@@ -43,7 +45,7 @@ export const totalSavingsOverTime = (
   monthlyDeposit: number,
   yearlyInterest: number,
   timeInMonths: number
-): number => {
+): Savings => {
   const principle = principleCompoundInterest(
     initialDeposit,
     yearlyInterest,
@@ -54,7 +56,32 @@ export const totalSavingsOverTime = (
     yearlyInterest,
     timeInMonths
   );
-  return monthly + principle;
+
+  const savingsFromInterest = totalInterestOverTime(
+    monthly,
+    principle,
+    initialDeposit,
+    monthlyDeposit,
+    timeInMonths
+  );
+  return {
+    total: monthly + principle,
+    deposit: monthly + principle - savingsFromInterest,
+    interest: savingsFromInterest,
+  };
+};
+
+const totalInterestOverTime = (
+  compoundedMonthly: number,
+  compoundedPrinciple: number,
+  initialDeposit: number,
+  monthlyDeposit: number,
+  timeInMonths: number
+): number => {
+  const totalMonthlyDeposit = monthlyDeposit * timeInMonths;
+  const totalDeposit = totalMonthlyDeposit + initialDeposit;
+  const totalCompoundedValue = compoundedMonthly + compoundedPrinciple;
+  return Math.round(totalCompoundedValue - totalDeposit);
 };
 
 const toRange = (value: number) => {
@@ -83,8 +110,14 @@ export const monthlySavingsOverTime = (
   timeInYears: number
 ): Array<number> => {
   const arr = toRange(timeInYears * 12);
-  return arr.map((number) =>
-    totalSavingsOverTime(initialDeposit, monthlyDeposit, yearlyInterest, number)
+  return arr.map(
+    (number) =>
+      totalSavingsOverTime(
+        initialDeposit,
+        monthlyDeposit,
+        yearlyInterest,
+        number
+      ).total
   );
 };
 
@@ -124,13 +157,14 @@ export const yearlySavingsOverTime = (
   timeInYears: number
 ): Array<number> => {
   const arr = toRange(timeInYears);
-  return arr.map((number) =>
-    totalSavingsOverTime(
-      initialDeposit,
-      monthlyDeposit,
-      yearlyInterest,
-      toMonths(number)
-    )
+  return arr.map(
+    (number) =>
+      totalSavingsOverTime(
+        initialDeposit,
+        monthlyDeposit,
+        yearlyInterest,
+        toMonths(number)
+      ).total
   );
 };
 

@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 import axios from '../axios'
 import { FIFTY_YEAR_MAX } from '../constants'
 
-export const useCompoundInterest = (
+export const useCompoundSavings = (
     initialDeposit: number,
     monthlyDeposit: number,
     interestRate: number
 ) => {
-    const [compoundInterestData, setCompoundInterestData] = useState([])
+    const [savings, setSavings] = useState({ total: 0, deposit: 0, interest: 0 })
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
     useEffect(() => {
@@ -15,7 +15,7 @@ export const useCompoundInterest = (
             return
         }
         axios
-            .get('interest/years', {
+            .get('interest/total', {
                 params: {
                     initialDeposit,
                     monthlyDeposit,
@@ -24,7 +24,7 @@ export const useCompoundInterest = (
                 },
             })
             .then((response) => {
-                setCompoundInterestData(response.data)
+                setSavings(response.data)
                 setIsError(false)
                 setIsLoading(false)
             })
@@ -36,6 +36,6 @@ export const useCompoundInterest = (
     return {
         isLoading,
         isError,
-        compoundInterestData,
+        savings,
     }
 }

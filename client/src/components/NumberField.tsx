@@ -1,44 +1,46 @@
-import React, { ChangeEvent } from 'react'
+import {
+    NumberDecrementStepper,
+    NumberIncrementStepper,
+    NumberInput,
+    NumberInputField,
+    NumberInputStepper,
+} from '@chakra-ui/react'
+import React from 'react'
 
 interface NumberFieldProps {
-    setNumber: Function
+    setValue: Function
+    value: string | number
     placeholder?: string
-    timeoutValue?: number
     min?: number
     max?: number
     step?: number
 }
 const NumberField = ({
-    setNumber,
-    placeholder,
+    setValue,
+    value,
     step = 1,
     min = 0,
     max = Number.MAX_SAFE_INTEGER,
-    timeoutValue = 0,
 }: NumberFieldProps) => {
-    const onInputChange = (setterFunc: Function, timeout: number) => (
-        event: ChangeEvent<HTMLInputElement>
-    ) => {
-        if (timeout === 0) {
-            setterFunc(event.target.value)
-            return
-        }
-        setTimeout(() => setterFunc(event.target.value), timeout)
-    }
-
     return (
-        <div id="NumberField">
-            <input
-                data-testid="number-field"
-                name="NumberInput"
-                type="number"
-                step={`${step}`}
-                min={min}
-                max={max}
-                placeholder={placeholder}
-                onChange={onInputChange(setNumber, timeoutValue)}
-            />
-        </div>
+        <NumberInput
+            allowMouseWheel
+            className="NumberInput"
+            size="lg"
+            maxW="100%"
+            clampValueOnBlur={false}
+            onChange={(valueString) => setValue(valueString)}
+            value={value}
+            step={step}
+            min={min}
+            max={max}
+        >
+            <NumberInputField data-testid="number-field" />
+            <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+            </NumberInputStepper>
+        </NumberInput>
     )
 }
 

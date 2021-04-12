@@ -4,3 +4,9 @@ export interface CompoundInterestRequest {
   yearlyInterest: number;
   numberOfYears: number;
 }
+
+export interface Savings {
+  total: number;
+  deposit: number;
+  interest: number;
+}
