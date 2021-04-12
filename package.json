@@ -7,9 +7,9 @@
     "express": "4.17.1"
   },
   "scripts": {
-    "start_dev": "concurrently \"npm run server_dev\" \"npm run client\"",
+    "start": "concurrently \"npm run server_dev\" \"npm run client\"",
     "server_dev": "NODE_ENV=development ts-node server.ts ",
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start_prod": "concurrently \"npm run server\" \"npm run client\"",
     "server": "NODE_ENV=production ts-node server.ts ",
     "types": "tsc",
     "client": "node scripts/start-client.js",
