@@ -1,5 +1,10 @@
 # closing-prices
 
+How to run the project
+-
+- yarn install
+- after all the dependancies are installed, run yarn start
+- 
 How I approached the challenge
 - 
 - Created utils file to handle compound interest logic
