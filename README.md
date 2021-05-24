@@ -8,20 +8,19 @@ How to run the project
  
 How I approached the challenge
 -
-- Created utils file to handle compound interest logic
-- Then built the backend endpoints and plugged the util functions into the responses
+- Created utils file to get data from api
+- Then built the backend endpoint and plugged the util function into the responses to handle cors
 - After that, I worked on the frontend, with a crappy first draft
-- Wired up the backend with the frontend input components
-- Finally,finished up by polishing the UI.
+- Finally, Wired up the backend with the frontend input components
 
 What I like
 -
-- The UI
-- Modularity of the functions in the utils files
+- Modularity of the functions in the utils file and custom hook
 
 What bits of my solution I’d like to improve upon
 -
 - I would like to refactor the App.tsx file further
 - Unit tests could be more robust
 - Inconsistencies with typescript type declarations, which I would clean up
+- UI could've been much better and should've implemented a dark version to keep it similar to the wireframe
 
