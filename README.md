@@ -1,7 +1,13 @@
 # closing-prices
 
+How to run the project
+-
+- yarn install
+- run yarn start
+- disable ad block
+ 
 How I approached the challenge
-- 
+-
 - Created utils file to handle compound interest logic
 - Then built the backend endpoints and plugged the util functions into the responses
 - After that, I worked on the frontend, with a crappy first draft
