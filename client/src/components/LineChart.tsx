@@ -22,18 +22,16 @@ const LineChart = ({ xAxisData, yAxisData, title, xLabel, yLabel }: Props) => {
             text: title,
         },
         scales: {
-            gridLines: { display: false },
             yAxes: [
                 {
+                    position: 'right',
                     scaleLabel: { display: !!yLabel, labelString: yLabel },
-                    gridLines: { display: false },
                 },
             ],
             xAxes: [
                 {
                     scaleLabel: { display: !!xLabel, labelString: xLabel },
                     ticks: { display: true },
-                    gridLines: { display: false },
                 },
             ],
         },

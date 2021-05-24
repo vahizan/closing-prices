@@ -1,5 +1,5 @@
 import express from "express";
-import CompoundInterestRoutes from "./routes/CompoundInterest";
+import ClosingPricesRoutes from "./routes/ClosingPrices";
 
 const cors = require("cors");
 
@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-app.use(CompoundInterestRoutes);
+app.use(ClosingPricesRoutes);
 
 app.listen(app.get("port"), () => {
   console.log(`Find the server at: http://localhost:${app.get("port")}/`); // eslint-disable-line no-console

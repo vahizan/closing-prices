@@ -10,6 +10,9 @@ dist
 npm-debug.log
 .idea
 .git
+.env.local
+.idea
+
 
 # yarn
 yarn-error.log

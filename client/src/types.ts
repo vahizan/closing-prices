@@ -1,10 +1,9 @@
-export interface YearlyCompoundInterest {
-    year: string
-    value: number
-}
-
-export interface MonthlyCompoundInterest extends YearlyCompoundInterest {
-    year: string
-    month: number
-    value: number
+export interface PriceData {
+    date: string
+    open: number
+    high: number
+    low: number
+    close: number
+    adjusted_close: number
+    volume: number
 }

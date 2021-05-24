@@ -1,14 +1,14 @@
-import { YearlyCompoundInterest } from './types'
+import { PriceData } from './types'
 
-export const toYearlyLineChartDataset = (compoundInterestData: Array<YearlyCompoundInterest>) => {
-    let years: string[] = []
+export const toLineChartClosingPriceDataset = (compoundInterestData: Array<PriceData>) => {
+    let dates: string[] = []
     let values: number[] = []
     compoundInterestData.forEach((compoundInterest) => {
-        years.push(compoundInterest.year)
-        values.push(compoundInterest.value)
+        dates.push(compoundInterest.date)
+        values.push(compoundInterest.close)
     })
     return {
-        xAxis: years,
+        xAxis: dates,
         yAxis: values,
     }
 }

@@ -1,16 +1,18 @@
 {
-  "name": "fullstack-dev-challenge",
+  "name": "illio-frontend",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "axios": "^0.21.1",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "4.17.1"
   },
   "scripts": {
     "start": "concurrently \"npm run server_dev\" \"npm run client\"",
-    "server_dev": "NODE_ENV=development ts-node server.ts ",
+    "server_dev": "NODE_ENV=development WEBSITE_URL=https://eodhistoricaldata.com/api/eod/ API_TOKEN=OeAFFmMliFG5orCUuwAKQ8l4WWFQ67YX ts-node server.ts ",
     "start_prod": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "NODE_ENV=production ts-node server.ts ",
+    "server": "NODE_ENV=production WEBSITE_URL=https://eodhistoricaldata.com/api/eod/ API_TOKEN=OeAFFmMliFG5orCUuwAKQ8l4WWFQ67YX ts-node server.ts ",
     "types": "tsc",
     "client": "node scripts/start-client.js",
     "install": "cd client && yarn install && cd .."
@@ -20,9 +22,11 @@
     "@types/express": "^4.17.9",
     "@types/jest": "^26.0.22",
     "@types/mocha": "^8.2.2",
+    "@types/moxios": "^0.4.11",
     "@types/node": "^14.14.14",
     "concurrently": "5.3.0",
     "mocha": "^8.2.1",
+    "moxios": "^0.4.0",
     "nock": "^13.0.11",
     "prettier": "2.2.1",
     "sinon": "^10.0.0",

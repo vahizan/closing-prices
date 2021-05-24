@@ -1,10 +1,10 @@
-import { toYearlyLineChartDataset } from './utils'
-import { lineChartDataSet, yearlyCompoundInterestData } from './utilsTestData'
+import { toLineChartClosingPriceDataset } from './utils'
+import { closingPriceData, lineChartDataSet } from './utilsTestData'
 
 describe('utils', () => {
     describe('toLineChartData', () => {
         test('Should format compound interest data to linechart axis data', () => {
-            expect(toYearlyLineChartDataset(yearlyCompoundInterestData)).toEqual(lineChartDataSet)
+            expect(toLineChartClosingPriceDataset(closingPriceData)).toEqual(lineChartDataSet)
         })
     })
 })

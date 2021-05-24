@@ -19,3 +19,4 @@ What bits of my solution I’d like to improve upon
 - I would like to refactor the App.tsx file further
 - Unit tests could be more robust
 - Inconsistencies with typescript type declarations, which I would clean up
+# closing-prices
