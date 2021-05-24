@@ -3,8 +3,8 @@
 How to run the project
 -
 - yarn install
-- after all the dependancies are installed, run yarn start
-- 
+- run yarn start
+- disable ad block
 How I approached the challenge
 - 
 - Created utils file to handle compound interest logic
