@@ -12,7 +12,7 @@
     "start": "concurrently \"npm run server_dev\" \"npm run client\"",
     "server_dev": "NODE_ENV=development WEBSITE_URL=https://eodhistoricaldata.com/api/eod/ API_TOKEN=OeAFFmMliFG5orCUuwAKQ8l4WWFQ67YX ts-node server.ts ",
     "start_prod": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "NODE_ENV=production WEBSITE_URL=https://eodhistoricaldata.com/api/eod/ API_TOKEN=OeAFFmMliFG5orCUuwAKQ8l4WWFQ67YX ts-node server.ts ",
+    "server": "NODE_ENV=production ts-node server.ts ",
     "types": "tsc",
     "client": "node scripts/start-client.js",
     "install": "cd client && yarn install && cd .."
